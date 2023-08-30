@@ -70,20 +70,27 @@ func GenClairScanCompletedQuery(index string) string {
 			`"objectRef.subresource"="status" `+
 			`"requestObject.metadata.labels.tekton.dev/pipelineTask"="clair-scan" `+
 			`"responseObject.status.completionTime"="*" `+
+			// Nested Search expr 1
+			// BuildNestedSearch(fieldToExpand, searchExpr)
+			// BuildNestedSearch{"responseObject.status.conditions{}", `{{.}}.type="Succeeded" {{.}}.reason="Succeeded" {{.}}.status="True"`)
 			`| spath responseObject.status.conditions{} `+
 			`| mvexpand responseObject.status.conditions{} `+
 			`| search responseObject.status.conditions{}.type="Succeeded" `+
 			`responseObject.status.conditions{}.reason="Succeeded" `+
 			`responseObject.status.conditions{}.status="True" `+
+			// Nested Search expr 2
+			// BuildNestedSearch{"responseObject.status.taskResults{}", `{{.}}.name="CLAIR_SCAN_RESULT"`)
 			`| spath responseObject.status.taskResults{} `+
 			`| mvexpand responseObject.status.taskResults{} `+
 			`| search responseObject.status.taskResults{}.name="CLAIR_SCAN_RESULT" `+
+			// Extract field value from JSON string
 			`| spath input=responseObject.status.taskResults{}.value path=vulnerabilities.critical output=clair_scan_result.vulnerabilities.critical `+
 			`| spath input=responseObject.status.taskResults{}.value path=vulnerabilities.high output=clair_scan_result.vulnerabilities.high `+
 			`| spath input=responseObject.status.taskResults{}.value path=vulnerabilities.medium output=clair_scan_result.vulnerabilities.medium `+
 			`| spath input=responseObject.status.taskResults{}.value path=vulnerabilities.low output=clair_scan_result.vulnerabilities.low `+
+			// Manually override default event name
 			`| eval event="Clair scan TaskRun completed"`,
-		[]string{"namespace", "application", "component", "vulnerabilities_critical", "vulnerabilities_high", "vulnerabilities_medium", "vulnerabilities_low"},
+		[]string{"namespace", "application", "component", "vulnerabilities_low"},
 	)
 	return q
 }

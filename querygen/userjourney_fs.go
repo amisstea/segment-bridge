@@ -30,7 +30,8 @@ var UserJourneyFieldSet = FieldSet{
 	"vulnerabilities_critical": {subObj: "properties", srcFields: []string{"clair_scan_result.vulnerabilities.critical"}},
 	"vulnerabilities_high":     {subObj: "properties", srcFields: []string{"clair_scan_result.vulnerabilities.high"}},
 	"vulnerabilities_medium":   {subObj: "properties", srcFields: []string{"clair_scan_result.vulnerabilities.medium"}},
-	"vulnerabilities_low":      {subObj: "properties", srcFields: []string{"clair_scan_result.vulnerabilities.low"}},
+	// "vulnerabilities_low":      {subObj: "properties", srcFields: []string{"clair_scan_result.vulnerabilities.low"}},
+	"vulnerabilities_low": {subObj: "properties", srcExpr: "spath(responseObject.status.taskResults{}.value, 'vulnerabilities.critical')"},
 }
 
 var UserJourneyCommonFields = [...]string{

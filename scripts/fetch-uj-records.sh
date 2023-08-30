@@ -23,7 +23,7 @@ SPLUNK_APP_NAME="${SPLUNK_APP_NAME:-rh_rhtap}"
 SPLUNK_INDEX="${SPLUNK_INDEX:-federated:rh_rhtap_stage_audit}"
 # Specify the earliest time to retrieve records from
 # Value is a Splunk time string, defaults to 4 hours ago
-QUERY_EARLIEST_TIME="${QUERY_EARLIEST_TIME:-"-4hours"}"
+QUERY_EARLIEST_TIME="${QUERY_EARLIEST_TIME:-"-12hours"}"
 # Specify the latest time to retrieve records from
 # Value is a Splunk time string, defaults to now
 QUERY_LATEST_TIME="${QUERY_LATEST_TIME:-"-0hours"}"

@@ -42,18 +42,18 @@ func main() {
 		printFunc = queryprint.MachinePrintQueries
 	}
 	fmt.Println(printFunc([]queryprint.QueryDesc{
-		{
-			Title: "Application events",
-			Query: querygen.GenApplicationQuery(*index),
-		},
-		{
-			Title: "Build PipelineRun creation events",
-			Query: querygen.GenBuildPipelineRunCreatedQuery(*index),
-		},
-		{
-			Title: "Build PipelineRun started events",
-			Query: querygen.GenBuildPipelineRunStartedQuery(*index),
-		},
+		// {
+		// 	Title: "Application events",
+		// 	Query: querygen.GenApplicationQuery(*index),
+		// },
+		// {
+		// 	Title: "Build PipelineRun creation events",
+		// 	Query: querygen.GenBuildPipelineRunCreatedQuery(*index),
+		// },
+		// {
+		// 	Title: "Build PipelineRun started events",
+		// 	Query: querygen.GenBuildPipelineRunStartedQuery(*index),
+		// },
 		{
 			Title: "Clair scan TaskRun completion events",
 			Query: querygen.GenClairScanCompletedQuery(*index),
