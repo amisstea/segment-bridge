@@ -3,7 +3,7 @@
 export SPLUNK_PASSWORD="Password"
 
 # Run an instance of Splunk during the build, to prepare the indexed logs for the tests
-/sbin/entrypoint.sh start-service &
+/sbin/entrypoint.sh start-service
 
 # Make sure the Splunk service is up
 timeout_start=$(date +%s)
